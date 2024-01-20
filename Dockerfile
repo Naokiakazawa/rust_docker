@@ -5,6 +5,6 @@ COPY . .
 RUN cargo build --release --target x86_64-unknown-linux-musl
 
 # Runtime stage
-FROM alpine
+FROM scratch
 COPY --from=builder target/x86_64-unknown-linux-musl/release/docker_sample docker_sample
 ENTRYPOINT ["./docker_sample"]

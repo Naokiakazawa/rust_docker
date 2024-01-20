@@ -1,4 +1,9 @@
-FROM rust:latest
+# Build stage
+FROM rust:latest AS builder
 COPY . .
 RUN cargo build --release
-ENTRYPOINT ["./target/release/docker_sample"]
+
+# Runtime stage
+FROM debian
+COPY --from=builder /target/release/docker_sample docker_sample
+ENTRYPOINT ["./docker_sample"]
